@@ -1,9 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import type { TripData, Day } from "@/lib/trip";
+import { storageKey } from "@/lib/editable";
 import Link from "next/link";
 import { Plane, BedDouble, Car, MapPin } from "lucide-react";
 import PreTripChecklist from "./PreTripChecklist";
+
+function loadEditedDay(d: Day | undefined): Day | undefined {
+  if (!d) return d;
+  if (typeof window === "undefined") return d;
+  try {
+    const raw = localStorage.getItem(storageKey(`day-${d.day}`));
+    if (raw) {
+      const edited = JSON.parse(raw);
+      return { ...d, ...edited };
+    }
+  } catch {}
+  return d;
+}
 
 function todayInVancouver(): Date {
   const fmt = new Intl.DateTimeFormat("en-CA", {
@@ -44,8 +58,8 @@ export default function TodayView({ trip }: { trip: TripData }) {
     return <PostTrip trip={trip} />;
   }
 
-  const today = trip.days[dayIndex];
-  const tomorrow = trip.days[dayIndex + 1];
+  const today = loadEditedDay(trip.days[dayIndex])!;
+  const tomorrow = loadEditedDay(trip.days[dayIndex + 1]);
   return <DuringTrip trip={trip} today={today} tomorrow={tomorrow} dayNum={dayIndex + 1} />;
 }
 
