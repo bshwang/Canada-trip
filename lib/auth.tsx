@@ -6,6 +6,7 @@ import {
   signInWithGoogle as _signIn,
   signOut as _signOut,
   watchAuth,
+  initAnalytics,
 } from "./firebase";
 
 interface AuthState {
@@ -34,6 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
       return;
     }
+    initAnalytics();
     const unsub = watchAuth((u) => {
       setUser(u);
       setLoading(false);

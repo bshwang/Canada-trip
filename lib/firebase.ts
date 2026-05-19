@@ -15,6 +15,7 @@ import {
   persistentMultipleTabManager,
   type Firestore,
 } from "firebase/firestore";
+import { isSupported as analyticsSupported, getAnalytics } from "firebase/analytics";
 
 const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -23,6 +24,7 @@ const config = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 let _app: FirebaseApp | null = null;
@@ -79,4 +81,18 @@ export function watchAuth(cb: (user: User | null) => void): () => void {
   }
   const auth = getAuthClient();
   return onAuthStateChanged(auth, cb);
+}
+
+let _analyticsInitialized = false;
+export async function initAnalytics(): Promise<void> {
+  if (_analyticsInitialized) return;
+  if (!config.measurementId) return;
+  if (!isFirebaseConfigured()) return;
+  if (typeof window === "undefined") return;
+  try {
+    if (await analyticsSupported()) {
+      getAnalytics(getApp());
+      _analyticsInitialized = true;
+    }
+  } catch {}
 }
