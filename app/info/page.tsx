@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { getTrip } from "@/lib/trip";
-import { Phone, Languages, CreditCard, Receipt, AlertOctagon, Utensils } from "lucide-react";
+import { Phone, Languages, CreditCard, Receipt, AlertOctagon, Utensils, ArrowRightLeft } from "lucide-react";
+import FxConverter from "@/components/FxConverter";
 
 export default function InfoPage() {
   const trip = getTrip();
@@ -37,6 +38,10 @@ export default function InfoPage() {
         <Card title="언어·통화" icon={<Languages size={16} className="text-sky2" />}>
           <div className="text-sm text-stone-700">{info.language}</div>
           <div className="text-xs text-stone-500 mt-1">{info.currency}</div>
+        </Card>
+
+        <Card title="환율 변환" icon={<ArrowRightLeft size={16} className="text-sky2" />}>
+          <FxConverter />
         </Card>
 
         <Card title="한식·한국 마트" icon={<Utensils size={16} className="text-brand" />}>

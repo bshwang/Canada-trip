@@ -2,6 +2,7 @@ import { getTrip } from "@/lib/trip";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, BedDouble, Car, MapPin } from "lucide-react";
+import DayNote from "@/components/DayNote";
 
 export function generateStaticParams() {
   const trip = getTrip();
@@ -71,6 +72,8 @@ export default function DayPage({ params }: { params: { day: string } }) {
           </ul>
         </div>
       )}
+
+      <DayNote day={day.day} />
     </div>
   );
 }

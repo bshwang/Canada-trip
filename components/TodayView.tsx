@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import type { TripData, Day } from "@/lib/trip";
 import Link from "next/link";
 import { Plane, BedDouble, Car, MapPin } from "lucide-react";
+import PreTripChecklist from "./PreTripChecklist";
 
 function todayInVancouver(): Date {
   const fmt = new Intl.DateTimeFormat("en-CA", {
@@ -71,6 +72,8 @@ function PreTrip({ trip, daysLeft }: { trip: TripData; daysLeft: number }) {
           <div className="text-sm font-medium">체크리스트</div>
         </Link>
       </div>
+
+      <PreTripChecklist />
 
       <div className="mt-5">
         <h2 className="text-sm font-semibold text-stone-700 mb-2">여정 미리보기</h2>
