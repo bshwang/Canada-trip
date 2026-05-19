@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { background: #fafaf9; color: #111827; }
+
+.leaflet-container { width: 100%; height: 100%; }
+
+/* Hide leaflet attribution link bg but keep text */
+.leaflet-control-attribution { font-size: 10px !important; }

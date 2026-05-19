@@ -1,0 +1,290 @@
+title: 캐나다 서부 로드트립 10박 11일
+subtitle: Vancouver IN · Calgary OUT
+startDate: "2026-08-04"
+endDate: "2026-08-14"
+style: Luxury · Foodie · Relaxed
+
+places:
+  vancouver:       { name: Vancouver,                  lat: 49.2827,  lon: -123.1207 }
+  hope:            { name: Hope,                       lat: 49.3858,  lon: -121.4419 }
+  penticton:       { name: Penticton,                  lat: 49.4991,  lon: -119.5937 }
+  kelowna:         { name: Kelowna,                    lat: 49.8880,  lon: -119.4960 }
+  revelstoke:      { name: Revelstoke,                 lat: 51.0000,  lon: -118.1957 }
+  yoho:            { name: Yoho NP - Natural Bridge,   lat: 51.3850,  lon: -116.5510 }
+  emerald:         { name: Emerald Lake,               lat: 51.4419,  lon: -116.5302 }
+  peyto:           { name: Peyto Lake,                 lat: 51.7250,  lon: -116.5247 }
+  bow:             { name: Bow Lake,                   lat: 51.6700,  lon: -116.4733 }
+  sask_crossing:   { name: Saskatchewan River Crossing,lat: 52.0260,  lon: -116.7264 }
+  athabasca:       { name: Athabasca Glacier,          lat: 52.2200,  lon: -117.2300 }
+  moraine:         { name: Moraine Lake,               lat: 51.3217,  lon: -116.1860 }
+  louise:          { name: Lake Louise,                lat: 51.4254,  lon: -116.1773 }
+  banff:           { name: Banff,                      lat: 51.1784,  lon: -115.5708 }
+  johnston:        { name: Johnston Canyon,            lat: 51.2466,  lon: -115.8400 }
+  calgary:         { name: Calgary,                    lat: 51.0447,  lon: -114.0719 }
+  hmart_coquitlam: { name: H-Mart Coquitlam,           lat: 49.2837,  lon: -122.7932 }
+  sura_van:        { name: Sura Korean BBQ Vancouver,  lat: 49.2848,  lon: -123.1248 }
+  kvillage_yyc:    { name: Korean Village Calgary,     lat: 51.0461,  lon: -114.0826 }
+
+days:
+  - day: 1
+    date: "2026-08-04"
+    weekday: Tue
+    title: 인천 → 밴쿠버 도착
+    summary: AC64 탑승 후 밴쿠버 도착, Fairmont Pacific Rim 체크인
+    base: vancouver
+    hotel: { name: Fairmont Pacific Rim, area: Coal Harbour, conf: "GHWSDJHZ" }
+    drive: null
+    activities:
+      - { time: 오전, place: 인천공항, note: AC64 출발 }
+      - { time: 오후, place: 밴쿠버 도착, note: 입국 심사 후 호텔 체크인 }
+      - { time: 저녁, place: Coal Harbour, note: 가볍게 산책 후 휴식 }
+    stops: [vancouver]
+
+  - day: 2
+    date: "2026-08-05"
+    weekday: Wed
+    title: 밴쿠버 시내 본격 탐방
+    summary: 베이글 아침 - 스탠리파크 - 그랜빌 - 개스타운
+    base: vancouver
+    hotel: { name: Fairmont Pacific Rim, area: Coal Harbour, conf: "GHWSDJHZ" }
+    drive: null
+    activities:
+      - { time: 아침, place: Siegel's Bagels, note: 몬트리올식 베이글 }
+      - { time: 오전, place: Stanley Park, note: Rockpule Trail 산책 }
+      - { time: 점심, place: Granville Island, note: Public Market 푸드코트 }
+      - { time: 오후, place: Gastown, note: Steam Clock 인증샷 }
+      - { time: 저녁, place: 다운타운, note: 예약 식당 (Food 탭 참고) }
+    stops: [vancouver]
+
+  - day: 3
+    date: "2026-08-06"
+    weekday: Thu
+    title: 밴쿠버 → 켈로나 (395km)
+    summary: Hope 점심, Penticton 와인루트, Kelowna 도착
+    base: kelowna
+    hotel: { name: Delta Hotels Grand Okanagan, area: Kelowna Waterfront, conf: "—" }
+    drive: { from: vancouver, to: kelowna, km: 395, hours: 4.5 }
+    activities:
+      - { time: 아침, place: 호텔 체크아웃, note: 차량 픽업 }
+      - { time: 점심, place: Hope, note: Hwy 5 진입 전 휴식+점심 }
+      - { time: 오후, place: Penticton Wine Route, note: 1-2 와이너리 테이스팅 }
+      - { time: 저녁, place: Kelowna, note: 호숫가 디너 }
+    stops: [vancouver, hope, penticton, kelowna]
+
+  - day: 4
+    date: "2026-08-07"
+    weekday: Fri
+    title: 켈로나 → 레벨스토크 (200km)
+    summary: 오카나간 과일 투어 후 레벨스토크
+    base: revelstoke
+    hotel: { name: Stoke Hotel, area: Downtown Revelstoke, conf: "548298540" }
+    drive: { from: kelowna, to: revelstoke, km: 200, hours: 2.5 }
+    activities:
+      - { time: 아침, place: Sprout Bread, note: 베이커리 픽업 }
+      - { time: 오전, place: Saturna Peach / Arndt's Orchard, note: 복숭아·체리 }
+      - { time: 오후, place: 레벨스토크 입성, note: 호텔 체크인 }
+      - { time: 저녁, place: Downtown Revelstoke, note: Quartermaster Eatery }
+    stops: [kelowna, revelstoke]
+
+  - day: 5
+    date: "2026-08-08"
+    weekday: Sat
+    title: 레벨스토크 → Lake Louise via Yoho NP
+    summary: Natural Bridge, Emerald Lake, Peyto Lake
+    base: bow
+    hotel: { name: Lodge at Bow Lake, area: Icefields Parkway, conf: "4R158EFRTU" }
+    drive: { from: revelstoke, to: bow, km: 285, hours: 3.8 }
+    activities:
+      - { time: 오전, place: Natural Bridge, note: Yoho NP 첫 정차 }
+      - { time: 점심, place: Emerald Lake, note: 호숫가 산책+카누 }
+      - { time: 오후, place: Peyto Lake, note: Bow Summit 전망대 }
+      - { time: 저녁, place: Lodge at Bow Lake, note: 체크인+로지 디너 }
+    stops: [revelstoke, yoho, emerald, peyto, bow]
+
+  - day: 6
+    date: "2026-08-09"
+    weekday: Sun
+    title: Icefields Parkway 종일
+    summary: Glacier Discovery Centre, Athabasca Glacier
+    base: moraine
+    hotel: { name: Moraine Lake Lodge, area: Moraine Lake, conf: "#22700" }
+    drive: { from: bow, to: moraine, km: 200, hours: 3.0 }
+    activities:
+      - { time: 아침, place: Bow Lake, note: 일출 사진 (5:55 AM) }
+      - { time: 오전, place: Glacier Discovery Centre, note: Skywalk 패스 구매 }
+      - { time: 점심, place: Athabasca Glacier, note: Ice Explorer 투어 }
+      - { time: 오후, place: Icefields Parkway 남행, note: Saskatchewan Crossing 주유 }
+      - { time: 저녁, place: Moraine Lake Lodge, note: 일몰 핑크아워 }
+    stops: [bow, athabasca, sask_crossing, moraine]
+
+  - day: 7
+    date: "2026-08-10"
+    weekday: Mon
+    title: Moraine Lake 일출 + Larch Valley
+    summary: 새벽 카누 → Larch Valley 하이크
+    base: moraine
+    hotel: { name: Moraine Lake Lodge, area: Moraine Lake, conf: "#22700" }
+    drive: null
+    activities:
+      - { time: 새벽, place: Moraine Lake, note: 일출 카누 (5:55 AM) }
+      - { time: 오전, place: Larch Valley, note: 왕복 4-5h 하이크 }
+      - { time: 오후, place: 로지 휴식, note: 핫초콜릿+북 }
+      - { time: 저녁, place: Lodge Dining Room, note: 코스 디너 }
+    stops: [moraine]
+
+  - day: 8
+    date: "2026-08-11"
+    weekday: Tue
+    title: Lake Louise → Banff
+    summary: Lake Agnes Tea House 하이크 후 Banff 이동
+    base: banff
+    hotel: { name: Fairmont Banff Springs (Gold King View), area: Banff Springs, conf: "GHPPCSVL" }
+    drive: { from: moraine, to: banff, km: 65, hours: 1.2 }
+    activities:
+      - { time: 아침, place: Lake Louise, note: 호숫가 카누 1시간 }
+      - { time: 오전, place: Lake Agnes Tea House, note: 왕복 3h 하이크 }
+      - { time: 점심, place: Chateau Lake Louise, note: Lakeview Lounge }
+      - { time: 오후, place: Fairmont Banff Springs, note: 체크인+스파 }
+      - { time: 저녁, place: 호텔 다이닝, note: Castle Pub or 1888 Chop }
+    stops: [louise, banff]
+
+  - day: 9
+    date: "2026-08-12"
+    weekday: Wed
+    title: Banff 종일
+    summary: Johnston Canyon, Banff Gondola, 스테이크 디너
+    base: banff
+    hotel: { name: Fairmont Banff Springs (Gold King View), area: Banff Springs, conf: "GHPPCSVL" }
+    drive: null
+    activities:
+      - { time: 아침, place: Banff Downtown, note: 카페+상점 }
+      - { time: 오전, place: Johnston Canyon, note: Lower+Upper Falls }
+      - { time: 점심, place: Banff Ave, note: 캐주얼 점심 }
+      - { time: 오후, place: Banff Gondola, note: Sulphur Mountain }
+      - { time: 저녁, place: Chuck's Steakhouse / Eden, note: 메인 디너 }
+    stops: [banff, johnston]
+
+  - day: 10
+    date: "2026-08-13"
+    weekday: Thu
+    title: Banff → Calgary (130km)
+    summary: Calgary 시내, Caesar's Steakhouse
+    base: calgary
+    hotel: { name: The Dorian Hotel (King Room), area: Downtown Calgary, conf: "77185607" }
+    drive: { from: banff, to: calgary, km: 130, hours: 1.5 }
+    activities:
+      - { time: 아침, place: Banff 체크아웃, note: 캘거리 이동 }
+      - { time: 점심, place: Calgary Downtown, note: Pigeonhole 캐주얼 }
+      - { time: 오후, place: Calgary Tower & Stephen Ave, note: 전망+거리 }
+      - { time: 저녁, place: Caesar's Steakhouse, note: 1972년 오픈 클래식 }
+    stops: [banff, calgary]
+
+  - day: 11
+    date: "2026-08-14"
+    weekday: Fri
+    title: 캘거리 → 인천
+    summary: YYC 공항 AC76 17:45
+    base: calgary
+    hotel: null
+    drive: null
+    activities:
+      - { time: 아침, place: 호텔, note: 늦은 체크아웃 / 브런치 }
+      - { time: 점심, place: Calgary Downtown, note: 마지막 식사 }
+      - { time: 오후, place: YYC 공항, note: AC76 17:45 ICN }
+    stops: [calgary]
+
+drives:
+  - { from: vancouver, to: kelowna, km: 395, hours: 4.5, scenic: [Hope 휴게소, Coquihalla, Penticton 와인루트], fuel: [Hope, Merritt, Penticton], cell: 거의 전 구간 양호 }
+  - { from: kelowna, to: revelstoke, km: 200, hours: 2.5, scenic: [Oyama Lake 뷰, Sicamous], fuel: [Vernon, Salmon Arm], cell: 양호 }
+  - { from: revelstoke, to: bow, km: 285, hours: 3.8, scenic: [Rogers Pass, Yoho NP, Emerald Lake, Peyto Lake], fuel: [Golden, Lake Louise village], cell: Rogers Pass/Yoho 일부 끊김 }
+  - { from: bow, to: moraine, km: 200, hours: 3.0, scenic: [Icefields Parkway 전 구간, Athabasca Glacier], fuel: [Saskatchewan River Crossing — Icefields 핵심 주유소], cell: Icefields Parkway 대부분 끊김 }
+  - { from: moraine, to: banff, km: 65, hours: 1.2, scenic: [Bow Valley Parkway], fuel: [Lake Louise, Banff], cell: 양호 }
+  - { from: banff, to: calgary, km: 130, hours: 1.5, scenic: [Canmore, Bow Valley], fuel: [Canmore], cell: 양호 }
+
+food:
+  vancouver:
+    - { name: Hawksworth,        cat: 모던 캐나디언, price: $$$$, tags: [예약필수, 드레스코드] }
+    - { name: Kissa Tanto,       cat: 이탈리안+재패니즈, price: $$$$, tags: [예약필수] }
+    - { name: St. Lawrence,      cat: 퀘벡 컨템포러리,  price: $$$$, tags: [예약필수] }
+    - { name: Published on Main, cat: 미슐랭 스타,      price: $$$$, tags: [예약필수, 드레스코드] }
+  kelowna:
+    - { name: RauDZ Regional Table, cat: 로컬 다이닝, price: $$$, tags: [예약필수] }
+    - { name: Waterfront Restaurant, cat: 파인 다이닝, price: $$$$, tags: [예약필수] }
+  revelstoke:
+    - { name: The Quartermaster, cat: 모던 비스트로, price: $$$, tags: [예약권장] }
+    - { name: Quartermaster Eatery, cat: 캐주얼, price: $$, tags: [워크인 OK] }
+  louise:
+    - { name: Walliser Stube,  cat: 스위스 퐁듀, price: $$$$, tags: [예약필수, 드레스코드] }
+    - { name: Lakeview Lounge, cat: 호숫가 점심, price: $$$, tags: [예약권장] }
+  banff:
+    - { name: Sky Bistro,      cat: 곤돌라 정상, price: $$$$, tags: [예약필수, 곤돌라 패키지] }
+    - { name: Eden,            cat: 미슐랭 스타, price: $$$$$, tags: [예약필수, 드레스코드] }
+    - { name: Three Ravens,    cat: 캐주얼 파인, price: $$$, tags: [예약필수] }
+    - { name: Chuck's Steakhouse, cat: 스테이크, price: $$$$, tags: [예약필수] }
+  calgary:
+    - { name: Pigeonhole,      cat: 모던 와인바, price: $$$, tags: [예약필수] }
+    - { name: River Cafe,      cat: 캐나디언 파인, price: $$$$, tags: [예약필수, 드레스코드] }
+    - { name: CHARCUT,         cat: 캐주얼 비스트로, price: $$$, tags: [워크인 OK] }
+    - { name: Caesar's Steakhouse, cat: 클래식 스테이크, price: $$$$, tags: [예약필수] }
+
+photos:
+  - { place: Moraine Lake, time: 일출 05:55, date: "2026-08-09", best: 보트독 위 파노라마, note: 8월 아직 빙하 색 살아있음 }
+  - { place: Moraine Lake, time: 일출 05:56, date: "2026-08-10", best: Rockpile 정상, note: 새벽 5시 진입 셔틀 필수 }
+  - { place: Peyto Lake,  time: 정오 12:00,  date: "2026-08-09", best: Bow Summit 전망대, note: 한낮 햇빛에 청록 극대화 }
+  - { place: Bow Lake,    time: 일출 05:54,  date: "2026-08-09", best: Lodge 앞 호숫가, note: 무풍이면 거울 반영 }
+  - { place: Emerald Lake, time: 오전 09:30, date: "2026-08-08", best: Natural Bridge 카누 데크, note: 아침 빛 부드러움 }
+  - { place: Lake Louise, time: 블루아워 21:20, date: "2026-08-11", best: Chateau 앞 호숫가, note: 해진 직후 30분 }
+  - { place: Athabasca Glacier, time: 정오 12:00, date: "2026-08-09", best: Ice Explorer 위, note: 한낮 빙벽 대비 강함 }
+  - { place: Banff Gondola Summit, time: 일몰 20:45, date: "2026-08-12", best: 보드워크 전망대, note: 알펜글로우 }
+
+packing:
+  - { cat: 의류, item: 라이트 푸퍼 (다운/프리마로프트), note: 록키 새벽/저녁 5-10°C }
+  - { cat: 의류, item: 윈드브레이커, note: Icefields Parkway 바람 강함 }
+  - { cat: 의류, item: 긴팔 베이스레이어 2벌, note: 하이크 + 일출 }
+  - { cat: 의류, item: 반팔 티 3-4벌, note: 한낮 20-25°C }
+  - { cat: 의류, item: 등산 바지 1, 캐주얼 팬츠 1, note: }
+  - { cat: 신발, item: 하이킹 슈즈 (방수), note: Larch Valley, Lake Agnes }
+  - { cat: 신발, item: 캐주얼 스니커즈, note: 시내+호텔 }
+  - { cat: 신발, item: 드레스 신발/플랫, note: Banff/Calgary 파인다이닝 }
+  - { cat: 액세서리, item: 선글라스 + SPF 50+, note: 빙하 반사 강함 }
+  - { cat: 액세서리, item: 모자 (캡/비니), note: 한낮+새벽용 }
+  - { cat: 액세서리, item: 카메라/삼각대, note: 일출·블루아워 }
+  - { cat: 액세서리, item: 보조배터리 + USB-C 케이블, note: }
+  - { cat: 전자, item: 110V Type B 어댑터, note: 한국 220V와 다름 }
+  - { cat: 전자, item: 셀룰러 eSIM (Roam Mobility/Holafly), note: Icefields는 데이터 거의 없음 }
+  - { cat: 서류, item: 한국 운전면허 + 국제운전면허증, note: 캐나다 렌터카 필수 }
+  - { cat: 서류, item: 여권 + ETA 사본, note: }
+  - { cat: 서류, item: 호텔 예약 확인서 (Reservations 탭), note: }
+  - { cat: 약품, item: 진통제, 멀미약, 지사제, 알러지약, note: }
+  - { cat: 약품, item: 밴드, 소독약, 손소독제, note: }
+  - { cat: 현지구매, item: 곰퇴치 스프레이 (Bear Spray), note: Canadian Tire 또는 MEC에서 구매 }
+  - { cat: 현지구매, item: 생수+간식, note: Saskatchewan Crossing 주유 시 함께 }
+  - { cat: 현지구매, item: Park Pass (Discovery Pass), note: Banff/Yoho/Jasper 통합 }
+
+info:
+  tax:
+    - { region: BC (Vancouver/Kelowna/Revelstoke), gst: 5%, pst: 7%, note: 식당/호텔 별도 청구 }
+    - { region: AB (Banff/Calgary/Lake Louise),   gst: 5%, pst: 없음, note: PST 없어 BC보다 저렴 }
+  tip: 18% 기본, 파인다이닝 20%, 룸서비스 별도
+  emergency: 911 (경찰/소방/응급의료 통합)
+  drivingRules:
+    - 우측 통행, 마일이 아닌 km
+    - 보행자 우선, 스쿨버스 STOP 시 양방향 정지
+    - 야생동물 (곰/엘크/사슴) 도로 진입 주의
+  language: English 공용, 시내 일부 한국어 가능
+  currency: CAD, 카드 99% 수용, 팁/세금 별도
+  koreanFood:
+    - { name: H-Mart Coquitlam, kind: 한국 마트, place: hmart_coquitlam }
+    - { name: Sura Korean BBQ Vancouver, kind: 한식당, place: sura_van }
+    - { name: Korean Village Calgary, kind: 한식당, place: kvillage_yyc }
+
+reservations:
+  - { kind: 항공, label: AC64 인천→밴쿠버, when: "2026-08-04", code: AC64 }
+  - { kind: 호텔, label: Fairmont Pacific Rim (2박), when: "8/4-8/6", code: "GHWSDJHZ" }
+  - { kind: 호텔, label: Delta Hotels Grand Okanagan, when: "8/6-8/7", code: "—" }
+  - { kind: 호텔, label: Stoke Hotel Revelstoke, when: "8/7-8/8", code: "548298540" }
+  - { kind: 호텔, label: Lodge at Bow Lake, when: "8/8-8/9", code: "4R158EFRTU" }
+  - { kind: 호텔, label: Moraine Lake Lodge (2박), when: "8/9-8/11", code: "#22700" }
+  - { kind: 호텔, label: Fairmont Banff Springs Gold King View (2박), when: "8/11-8/13", code: "GHPPCSVL" }
+  - { kind: 호텔, label: The Dorian Hotel Calgary King, when: "8/13-8/14", code: "77185607" }
+  - { kind: 항공, label: AC76 캘거리→인천 17:45, when: "2026-08-14", code: AC76 }
