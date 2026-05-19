@@ -1,10 +1,8 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { Day } from "@/lib/trip";
 import { Plus, Trash2, Wallet, ArrowRightLeft } from "lucide-react";
-
-const KEY = "canada-trip-budget-v1";
-const RATE_KEY = "canada-trip-fx-v1";
+import { useTripData } from "@/lib/store";
 
 interface Expense {
   id: string;
@@ -14,6 +12,8 @@ interface Expense {
   cad: number;
   ts: number;
 }
+
+const EMPTY_EXPENSES: Expense[] = [];
 
 const CATS = ["식사", "숙소", "주유", "액티비티", "쇼핑", "기타"] as const;
 const CAT_COLOR: Record<string, string> = {
@@ -30,32 +30,14 @@ function uid() {
 }
 
 export default function BudgetTracker({ days }: { days: Day[] }) {
-  const [items, setItems] = useState<Expense[]>([]);
-  const [rate, setRate] = useState<number>(1000); // 1 CAD = X KRW
-  const [loaded, setLoaded] = useState(false);
+  const { value: items, setValue: setItems } =
+    useTripData<Expense[]>("budget", EMPTY_EXPENSES);
+  const { value: rate, setValue: setRate } = useTripData<number>("fx-rate", 1000);
 
   const [day, setDay] = useState<number>(days[0]?.day ?? 1);
   const [cat, setCat] = useState<string>(CATS[0]);
   const [label, setLabel] = useState("");
   const [cad, setCad] = useState("");
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) setItems(JSON.parse(raw));
-      const r = localStorage.getItem(RATE_KEY);
-      if (r) setRate(parseFloat(r) || 1000);
-    } catch {}
-    setLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (loaded) localStorage.setItem(KEY, JSON.stringify(items));
-  }, [items, loaded]);
-
-  useEffect(() => {
-    if (loaded) localStorage.setItem(RATE_KEY, String(rate));
-  }, [rate, loaded]);
 
   const totals = useMemo(() => {
     const totalCad = items.reduce((s, it) => s + it.cad, 0);

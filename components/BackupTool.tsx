@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Download, Upload, Trash2, AlertTriangle, Check } from "lucide-react";
 
+// Catches both legacy localStorage keys and current cache-v2 keys.
 const ALL_PREFIXES = ["canada-trip-"];
 
 interface Snapshot {

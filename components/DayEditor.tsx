@@ -1,11 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import type { Day, Activity, Hotel, DriveSpec, Place } from "@/lib/trip";
-import { storageKey, uid } from "@/lib/editable";
+import { useTripData, uid } from "@/lib/store";
 import {
   BedDouble,
   Car,
-  MapPin,
   Plus,
   Pencil,
   Trash2,
@@ -14,7 +13,6 @@ import {
   ChevronUp,
   ChevronDown,
   RotateCcw,
-  Save,
 } from "lucide-react";
 
 type ActivityWithId = Activity & { id: string };
@@ -34,33 +32,11 @@ export default function DayEditor({
   day: Day;
   places: Record<string, Place>;
 }) {
-  const key = storageKey(`day-${defaults.day}`);
-  const seeded = seedDay(defaults);
-  const [day, setDay] = useState<EditableDay>(seeded);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(key);
-      if (raw) {
-        setDay(JSON.parse(raw));
-      } else {
-        setDay(seeded);
-        localStorage.setItem(key, JSON.stringify(seeded));
-      }
-    } catch {
-      setDay(seeded);
-    }
-    setLoaded(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
-
-  useEffect(() => {
-    if (!loaded) return;
-    try {
-      localStorage.setItem(key, JSON.stringify(day));
-    } catch {}
-  }, [day, loaded, key]);
+  const seeded = useMemo(() => seedDay(defaults), [defaults]);
+  const { value: day, setValue: setDay, loaded } = useTripData<EditableDay>(
+    `day-${defaults.day}`,
+    seeded,
+  );
 
   const [editingHeader, setEditingHeader] = useState(false);
   const [editingHotel, setEditingHotel] = useState(false);
@@ -114,9 +90,6 @@ export default function DayEditor({
   function resetAll() {
     if (!confirm("이 날의 모든 편집 내용을 초기화할까요?")) return;
     setDay(seeded);
-    try {
-      localStorage.setItem(key, JSON.stringify(seeded));
-    } catch {}
   }
 
   return (

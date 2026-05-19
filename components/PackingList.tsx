@@ -1,36 +1,24 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { PackItem } from "@/lib/trip";
-import { useEditableList, uid } from "@/lib/editable";
+import { useTripList, useTripData, uid } from "@/lib/store";
 import { Check, Plus, Pencil, Trash2, X, RotateCcw } from "lucide-react";
 
 type PackWithId = PackItem & { id: string };
-
-const CHECK_KEY = "canada-trip-packing-v1";
 
 function seed(items: PackItem[]): PackWithId[] {
   return items.map((it, i) => ({ ...it, id: `seed-${i}` }));
 }
 
+const EMPTY_CHECKS: Record<string, boolean> = {};
+
 export default function PackingList({ items: defaults }: { items: PackItem[] }) {
   const seeded = useMemo(() => seed(defaults), [defaults]);
   const { items, loaded, add, update, remove, reset } =
-    useEditableList<PackWithId>("packing", seeded);
+    useTripList<PackWithId>("packing", seeded);
 
-  const [done, setDone] = useState<Record<string, boolean>>({});
-  const [checkLoaded, setCheckLoaded] = useState(false);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(CHECK_KEY);
-      if (raw) setDone(JSON.parse(raw));
-    } catch {}
-    setCheckLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (checkLoaded) localStorage.setItem(CHECK_KEY, JSON.stringify(done));
-  }, [done, checkLoaded]);
+  const { value: done, setValue: setDone } =
+    useTripData<Record<string, boolean>>("packing-checks", EMPTY_CHECKS);
 
   const [adding, setAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);

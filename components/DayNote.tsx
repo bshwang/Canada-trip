@@ -1,36 +1,23 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { NotebookPen, Check } from "lucide-react";
-
-const KEY_PREFIX = "canada-trip-note-v1::";
+import { useTripData } from "@/lib/store";
 
 export default function DayNote({ day }: { day: number }) {
-  const [text, setText] = useState("");
-  const [loaded, setLoaded] = useState(false);
+  const { value, setValue, loaded, status } = useTripData<string>(
+    `note-day-${day}`,
+    "",
+  );
   const [savedAt, setSavedAt] = useState<number | null>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(KEY_PREFIX + day);
-      if (raw) setText(raw);
-    } catch {}
-    setLoaded(true);
-  }, [day]);
+  const prev = useRef(value);
 
   useEffect(() => {
     if (!loaded) return;
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      try {
-        localStorage.setItem(KEY_PREFIX + day, text);
-        setSavedAt(Date.now());
-      } catch {}
-    }, 400);
-    return () => {
-      if (timer.current) clearTimeout(timer.current);
-    };
-  }, [text, loaded, day]);
+    if (value !== prev.current) {
+      setSavedAt(Date.now());
+      prev.current = value;
+    }
+  }, [value, loaded]);
 
   const justSaved = savedAt && Date.now() - savedAt < 2000;
 
@@ -40,9 +27,11 @@ export default function DayNote({ day }: { day: number }) {
         <h2 className="text-sm font-semibold text-stone-700 flex items-center gap-1.5">
           <NotebookPen size={15} className="text-brand" /> 데이 노트
         </h2>
-        {savedAt && (
+        {loaded && (
           <span className="text-[11px] text-stone-400 flex items-center gap-1">
-            {justSaved ? (
+            {status === "syncing" ? (
+              <>저장 중…</>
+            ) : justSaved ? (
               <>
                 <Check size={12} className="text-emerald-500" /> 저장됨
               </>
@@ -53,8 +42,8 @@ export default function DayNote({ day }: { day: number }) {
         )}
       </div>
       <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="이 날의 기록 — 감상, 사진 메모, 다음 여행을 위한 팁..."
         className="w-full min-h-[140px] rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm text-stone-800 placeholder:text-stone-400 focus:bg-white focus:border-brand focus:outline-none resize-y"
       />

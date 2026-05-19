@@ -1,25 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowRightLeft } from "lucide-react";
-
-const RATE_KEY = "canada-trip-fx-v1";
+import { useTripData } from "@/lib/store";
 
 export default function FxConverter() {
-  const [rate, setRate] = useState<number>(1000);
+  const { value: rate, setValue: setRate } = useTripData<number>("fx-rate", 1000);
   const [cad, setCad] = useState<string>("10");
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    try {
-      const r = localStorage.getItem(RATE_KEY);
-      if (r) setRate(parseFloat(r) || 1000);
-    } catch {}
-    setLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (loaded) localStorage.setItem(RATE_KEY, String(rate));
-  }, [rate, loaded]);
 
   const c = parseFloat(cad) || 0;
   const krw = Math.round(c * rate);

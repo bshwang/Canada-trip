@@ -1,9 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Check, ChevronDown, ChevronUp, ListChecks } from "lucide-react";
-
-const KEY = "canada-trip-predeparture-v1";
-const OPEN_KEY = "canada-trip-predeparture-open-v1";
+import { useTripData } from "@/lib/store";
 
 interface Item {
   id: string;
@@ -11,6 +9,8 @@ interface Item {
   hint?: string;
   deadline?: string; // 출발 며칠 전
 }
+
+const EMPTY_CHECKS: Record<string, boolean> = {};
 
 const ITEMS: Item[] = [
   { id: "passport", label: "여권 유효기간 6개월 이상 확인", hint: "2026-08-14 이후 6개월 = 2027-02-14 이후 만료" , deadline: "D-60"},
@@ -31,27 +31,9 @@ const ITEMS: Item[] = [
 ];
 
 export default function PreTripChecklist() {
-  const [done, setDone] = useState<Record<string, boolean>>({});
-  const [loaded, setLoaded] = useState(false);
+  const { value: done, setValue: setDone } =
+    useTripData<Record<string, boolean>>("pre-departure", EMPTY_CHECKS);
   const [open, setOpen] = useState(true);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) setDone(JSON.parse(raw));
-      const o = localStorage.getItem(OPEN_KEY);
-      if (o !== null) setOpen(o === "1");
-    } catch {}
-    setLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (loaded) localStorage.setItem(KEY, JSON.stringify(done));
-  }, [done, loaded]);
-
-  useEffect(() => {
-    if (loaded) localStorage.setItem(OPEN_KEY, open ? "1" : "0");
-  }, [open, loaded]);
 
   const total = ITEMS.length;
   const doneCount = ITEMS.filter((it) => done[it.id]).length;

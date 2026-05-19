@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { FoodItem } from "@/lib/trip";
-import { useEditableMap, uid } from "@/lib/editable";
+import { useTripMap, uid } from "@/lib/store";
 import {
   UtensilsCrossed,
   Plus,
@@ -38,12 +38,15 @@ export default function FoodEditor({
   cityOrder: string[];
   cityNames: Record<string, string>;
 }) {
-  const seededDefaults: Record<string, FoodWithId[]> = {};
-  for (const k of Object.keys(defaults)) {
-    seededDefaults[k] = seedCity(defaults[k]);
-  }
+  const seededDefaults = useMemo(() => {
+    const out: Record<string, FoodWithId[]> = {};
+    for (const k of Object.keys(defaults)) {
+      out[k] = seedCity(defaults[k]);
+    }
+    return out;
+  }, [defaults]);
 
-  const { data, loaded, setBucket, reset } = useEditableMap<FoodWithId[]>(
+  const { data, loaded, setBucket, reset } = useTripMap<FoodWithId[]>(
     "food",
     seededDefaults,
   );

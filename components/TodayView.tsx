@@ -1,16 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import type { TripData, Day } from "@/lib/trip";
-import { storageKey } from "@/lib/editable";
 import Link from "next/link";
 import { Plane, BedDouble, Car, MapPin } from "lucide-react";
 import PreTripChecklist from "./PreTripChecklist";
+
+const CACHE_PREFIX = "canada-trip-cache-v2::";
 
 function loadEditedDay(d: Day | undefined): Day | undefined {
   if (!d) return d;
   if (typeof window === "undefined") return d;
   try {
-    const raw = localStorage.getItem(storageKey(`day-${d.day}`));
+    const raw = localStorage.getItem(CACHE_PREFIX + `day-${d.day}`);
     if (raw) {
       const edited = JSON.parse(raw);
       return { ...d, ...edited };

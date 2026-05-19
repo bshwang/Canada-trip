@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Reservation } from "@/lib/trip";
-import { useEditableList, withSeedIds } from "@/lib/editable";
+import { useTripList, withSeedIds } from "@/lib/store";
 import {
   Plane,
   BedDouble,
@@ -32,8 +32,8 @@ export default function ReservationsEditor({
 }: {
   defaults: Reservation[];
 }) {
-  const seeded = withSeedIds(defaults, "res");
-  const { items, loaded, add, update, remove, reset } = useEditableList<ResWithId>(
+  const seeded = useMemo(() => withSeedIds(defaults, "res"), [defaults]);
+  const { items, loaded, add, update, remove, reset } = useTripList<ResWithId>(
     "reservations",
     seeded,
   );

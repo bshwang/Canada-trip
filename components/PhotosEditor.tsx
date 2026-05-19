@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { PhotoSpot } from "@/lib/trip";
-import { useEditableList, withSeedIds } from "@/lib/editable";
+import { useTripList, withSeedIds } from "@/lib/store";
 import {
   Camera,
   Sunrise,
@@ -16,9 +16,9 @@ import {
 type PhotoWithId = PhotoSpot & { id: string };
 
 export default function PhotosEditor({ defaults }: { defaults: PhotoSpot[] }) {
-  const seeded = withSeedIds(defaults, "photo");
+  const seeded = useMemo(() => withSeedIds(defaults, "photo"), [defaults]);
   const { items, loaded, add, update, remove, reset } =
-    useEditableList<PhotoWithId>("photos", seeded);
+    useTripList<PhotoWithId>("photos", seeded);
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
