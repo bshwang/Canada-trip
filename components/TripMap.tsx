@@ -1,9 +1,10 @@
 "use client";
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { TripData } from "@/lib/trip";
+import { gmapsDirections } from "@/lib/maps";
 
 // Fix default marker icons (Leaflet/Webpack incompat)
 const icon = L.icon({
@@ -16,7 +17,50 @@ const icon = L.icon({
   shadowSize: [41, 41],
 });
 
-export default function TripMap({ trip }: { trip: TripData }) {
+// Highlighted icon for the focused place
+const focusIcon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [33, 54],
+  iconAnchor: [16, 54],
+  popupAnchor: [1, -46],
+  shadowSize: [54, 54],
+  className: "focus-marker",
+});
+
+function FocusController({
+  focusKey,
+  places,
+  markerRefs,
+}: {
+  focusKey?: string;
+  places: TripData["places"];
+  markerRefs: React.MutableRefObject<Record<string, L.Marker | null>>;
+}) {
+  const map = useMap();
+  useEffect(() => {
+    if (!focusKey) return;
+    const p = places[focusKey];
+    if (!p) return;
+    map.flyTo([p.lat, p.lon], 11, { duration: 1.0 });
+    const t = setTimeout(() => {
+      markerRefs.current[focusKey]?.openPopup();
+    }, 1100);
+    return () => clearTimeout(t);
+  }, [focusKey, places, map, markerRefs]);
+  return null;
+}
+
+export default function TripMap({
+  trip,
+  focusKey,
+}: {
+  trip: TripData;
+  focusKey?: string;
+}) {
+  const markerRefs = useRef<Record<string, L.Marker | null>>({});
+
   const route = useMemo(() => {
     const keys = ["vancouver", "kelowna", "revelstoke", "bow", "moraine", "louise", "banff", "calgary"];
     return keys
@@ -48,13 +92,31 @@ export default function TripMap({ trip }: { trip: TripData }) {
       />
       <Polyline positions={route} pathOptions={{ color: "#059669", weight: 3, opacity: 0.7 }} />
       {Object.entries(trip.places).map(([key, p]) => (
-        <Marker key={key} position={[p.lat, p.lon]} icon={icon}>
+        <Marker
+          key={key}
+          position={[p.lat, p.lon]}
+          icon={key === focusKey ? focusIcon : icon}
+          ref={(m) => {
+            markerRefs.current[key] = m;
+          }}
+        >
           <Popup>
             <div className="text-sm font-semibold">{p.name}</div>
-            <div className="text-xs text-stone-500 mt-0.5">{p.lat.toFixed(4)}, {p.lon.toFixed(4)}</div>
+            <div className="text-xs text-stone-500 mt-0.5">
+              {p.lat.toFixed(4)}, {p.lon.toFixed(4)}
+            </div>
+            <a
+              href={gmapsDirections(p.lat, p.lon, p.name)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-1.5 text-xs font-medium text-sky-700 underline"
+            >
+              Google Maps 길찾기 →
+            </a>
           </Popup>
         </Marker>
       ))}
+      <FocusController focusKey={focusKey} places={trip.places} markerRefs={markerRefs} />
     </MapContainer>
   );
 }

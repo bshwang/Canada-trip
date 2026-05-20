@@ -8,3 +8,13 @@ html, body { background: #fafaf9; color: #111827; }
 
 /* Hide leaflet attribution link bg but keep text */
 .leaflet-control-attribution { font-size: 10px !important; }
+
+/* Focused marker — subtle pulse to draw the eye */
+.focus-marker {
+  filter: hue-rotate(120deg) saturate(1.6) drop-shadow(0 0 6px rgba(5, 150, 105, 0.7));
+  animation: focus-bounce 1.2s ease-in-out 2;
+}
+@keyframes focus-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}

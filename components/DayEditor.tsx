@@ -1,10 +1,13 @@
 "use client";
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import type { Day, Activity, Hotel, DriveSpec, Place } from "@/lib/trip";
 import { useTripData, uid } from "@/lib/store";
+import { gmapsDirectionsBetween, gmapsSearch } from "@/lib/maps";
 import {
   BedDouble,
   Car,
+  MapPin,
   Plus,
   Pencil,
   Trash2,
@@ -13,6 +16,7 @@ import {
   ChevronUp,
   ChevronDown,
   RotateCcw,
+  Navigation,
 } from "lucide-react";
 
 type ActivityWithId = Activity & { id: string };
@@ -47,6 +51,16 @@ export default function DayEditor({
   if (!loaded) {
     return <div className="py-10 text-center text-stone-400 text-sm">로딩…</div>;
   }
+
+  const fromPlace = day.drive ? places[day.drive.from] : undefined;
+  const toPlace = day.drive ? places[day.drive.to] : undefined;
+  const placesPair =
+    fromPlace && toPlace
+      ? { from: { lat: fromPlace.lat, lon: fromPlace.lon }, to: { lat: toPlace.lat, lon: toPlace.lon } }
+      : null;
+
+  // 활동 장소 검색 시 도시명을 덧붙여 정확도 향상 (예: "Stanley Park Vancouver")
+  const searchHint = places[day.base]?.name ?? "";
 
   function patch(p: Partial<EditableDay>) {
     setDay((prev) => ({ ...prev, ...p }));
@@ -174,17 +188,37 @@ export default function DayEditor({
             }}
           />
         ) : day.drive ? (
-          <div className="rounded-xl bg-sky2-light border border-sky-100 p-3 flex items-center gap-3">
-            <Car size={20} className="text-sky2" />
-            <div className="flex-1">
-              <div className="text-sm font-medium">
-                {places[day.drive.from]?.name ?? day.drive.from} →{" "}
-                {places[day.drive.to]?.name ?? day.drive.to}
-              </div>
-              <div className="text-xs text-stone-500">
-                {day.drive.km}km · 약 {day.drive.hours}h
+          <div className="rounded-xl bg-sky2-light border border-sky-100 p-3">
+            <div className="flex items-center gap-3">
+              <Car size={20} className="text-sky2" />
+              <div className="flex-1">
+                <div className="text-sm font-medium">
+                  {places[day.drive.from]?.name ?? day.drive.from} →{" "}
+                  {places[day.drive.to]?.name ?? day.drive.to}
+                </div>
+                <div className="text-xs text-stone-500">
+                  {day.drive.km}km · 약 {day.drive.hours}h
+                </div>
               </div>
             </div>
+            {placesPair && (
+              <div className="mt-2 flex gap-2">
+                <Link
+                  href={`/map?focus=${day.drive.to}`}
+                  className="flex-1 text-center text-xs text-sky2 border border-sky-200 rounded-lg py-1.5 active:bg-sky-100"
+                >
+                  지도에서 보기
+                </Link>
+                <a
+                  href={gmapsDirectionsBetween(placesPair.from, placesPair.to)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1 text-xs text-white bg-sky2 rounded-lg py-1.5 active:opacity-90"
+                >
+                  <Navigation size={12} /> 구간 길찾기
+                </a>
+              </div>
+            )}
           </div>
         ) : (
           <div className="text-xs text-stone-400">드라이브 없음</div>
@@ -241,7 +275,15 @@ export default function DayEditor({
                   {a.time}
                 </span>
                 <div className="flex-1">
-                  <div className="font-medium text-stone-800">{a.place}</div>
+                  <a
+                    href={gmapsSearch(`${a.place} ${searchHint}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-stone-800 inline-flex items-center gap-1 active:text-sky2"
+                  >
+                    {a.place}
+                    <MapPin size={11} className="text-stone-300" />
+                  </a>
                   {a.note && <div className="text-xs text-stone-500">{a.note}</div>}
                 </div>
                 <div className="flex flex-col gap-0.5 -mr-1">

@@ -1,9 +1,10 @@
 import { getTrip } from "@/lib/trip";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft, MapPin } from "lucide-react";
+import { ChevronLeft, MapPin, Navigation } from "lucide-react";
 import DayNote from "@/components/DayNote";
 import DayEditor from "@/components/DayEditor";
+import { gmapsDirections } from "@/lib/maps";
 
 export function generateStaticParams() {
   const trip = getTrip();
@@ -28,16 +29,39 @@ export default function DayPage({ params }: { params: { day: string } }) {
 
       {day.stops.length > 0 && (
         <div className="mt-5">
-          <h2 className="text-sm font-semibold text-stone-700 mb-2">주요 정차지</h2>
-          <ul className="flex flex-wrap gap-1.5">
-            {day.stops.map((s) => (
-              <li
-                key={s}
-                className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-stone-100 text-stone-700"
-              >
-                <MapPin size={11} /> {trip.places[s]?.name ?? s}
-              </li>
-            ))}
+          <h2 className="text-sm font-semibold text-stone-700 mb-2">
+            주요 정차지 <span className="text-xs font-normal text-stone-400">· 탭하면 지도</span>
+          </h2>
+          <ul className="space-y-1.5">
+            {day.stops.map((s) => {
+              const p = trip.places[s];
+              return (
+                <li
+                  key={s}
+                  className="flex items-center gap-2 rounded-xl border border-stone-200 px-3 py-2"
+                >
+                  <Link
+                    href={`/map?focus=${s}`}
+                    className="flex-1 flex items-center gap-2 min-w-0 active:opacity-60"
+                  >
+                    <MapPin size={14} className="text-brand shrink-0" />
+                    <span className="text-sm text-stone-800 truncate">
+                      {p?.name ?? s}
+                    </span>
+                  </Link>
+                  {p && (
+                    <a
+                      href={gmapsDirections(p.lat, p.lon, p.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-xs text-sky2 px-2 py-1 rounded-lg active:bg-sky-50 shrink-0"
+                    >
+                      <Navigation size={13} /> 길찾기
+                    </a>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
